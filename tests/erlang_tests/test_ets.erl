@@ -32,6 +32,7 @@ start() ->
     ok = test_public_access(),
     ok = test_lookup_element(),
     ok = test_insert_list(),
+    ok = test_delete_table(),
     0.
 
 test_basic() ->
@@ -365,4 +366,16 @@ test_insert_list() ->
         ets:insert(Tid, [{foo, tapas}, pararara, {batat, batat}, {patat, patat}])
     end),
     expect_failure(fun() -> ets:insert(Tid, [{}]) end),
+    ok.
+
+test_delete_table() ->
+    Tid = ets:new(test_delete_table, []),
+    true = ets:insert(Tid, {foo, tapas}),
+    [{foo, tapas}] = ets:lookup(Tid, foo),
+    true = ets:delete(Tid),
+    ok = expect_failure(
+        fun() -> ets:insert(Tid, {gnu, gnat}) end
+    ),
+    Ntid = ets:new(test_delete_table, []),
+    true = ets:delete(Ntid),
     ok.
