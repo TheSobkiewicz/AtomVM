@@ -29,6 +29,7 @@
     insert/2,
     lookup/2,
     lookup_element/3,
+    delete/1,
     delete/2
 ]).
 
@@ -100,4 +101,13 @@ lookup_element(_Table, _Key, _Pos) ->
 %%-----------------------------------------------------------------------------
 -spec delete(Table :: table(), Key :: term()) -> true.
 delete(_Table, _Key) ->
+    erlang:nif_error(undefined).
+%%-----------------------------------------------------------------------------
+%% @param   Table a reference to the ets table
+%% @returns true; otherwise, an error is raised if arguments are bad
+%% @doc Delete an ets table.
+%% @end
+%%-----------------------------------------------------------------------------
+-spec delete(Table :: table()) -> true.
+delete(_Table) ->
     erlang:nif_error(undefined).

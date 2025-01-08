@@ -436,7 +436,8 @@ EtsErrorCode ets_drop_table(term name_or_ref, term *ret, Context *ctx)
         return EtsPermissionDenied;
     }
 
-    synclist_wrlock(&ctx->global->ets.ets_tables);
+    struct ListHead *_ets_tables_list = synclist_wrlock(&ctx->global->ets.ets_tables);
+    UNUSED(_ets_tables_list);
     SMP_UNLOCK(ets_table);
     list_remove(&ets_table->head);
     ets_table_destroy(ets_table, ctx->global);
